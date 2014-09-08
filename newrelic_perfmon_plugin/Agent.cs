@@ -45,34 +45,40 @@ namespace newrelic_perfmon_plugin
                 
                 ManagementObjectSearcher search = new ManagementObjectSearcher(ManagementScopt, new ObjectQuery(queryString));
 
-                ManagementObjectCollection queryResults = search.Get();
-
-                foreach (ManagementObject result in queryResults)
+                try
                 {
-                    try
+                    ManagementObjectCollection queryResults = search.Get();
+
+
+                    foreach (ManagementObject result in queryResults)
                     {
-
-                        float value = Convert.ToSingle(result[counterName]);
-                        string instanceName = string.Empty;
-
-                        if (result["Name"] != null)
+                        try
                         {
-                            instanceName = string.Format("({0})", result["Name"]);
+                            float value = Convert.ToSingle(result[counterName]);
+                            string instanceName = string.Empty;
+
+                            if (result["Name"] != null)
+                            {
+                                instanceName = string.Format("({0})", result["Name"]);
+                            }
+
+                            string metricName = string.Format("{0}/{1}{3}/{2}", providerName, categoryName, counterName, instanceName);
+
+                            Console.WriteLine("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
+
+                            ReportMetric(metricName, unitValue, value);
                         }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Exception occurred in processing results.\n", e.Message, e.StackTrace);
 
-                        string metricName = string.Format("{0}/{1}{3}/{2}", providerName, categoryName, counterName, instanceName);
-
-                        Console.WriteLine("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
-
-                        ReportMetric(metricName, unitValue, value);
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine("Exception occurred in polling.\n", e.Message, e.StackTrace);
-
+                        }
                     }
                 }
-
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception occurred in polling.\n", e.Message, e.StackTrace);
+                }              
             }
         }
     }
