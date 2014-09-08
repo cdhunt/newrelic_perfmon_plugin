@@ -37,7 +37,7 @@ The format is `Win32_PerfFormattedData_{provider}_{category}`.
 Get a list of all counters for that category:
  
 ```powershell
-PS C:\temp> Get-CimInstance "Win32_PerfFormattedData_MSSQLSQLEXPRESS_MSSQLSQLEXPRESSBufferManager"
+PS C:\> Get-CimInstance "Win32_PerfFormattedData_MSSQLSQLEXPRESS_MSSQLSQLEXPRESSBufferManager"
 
 
 Caption               :
