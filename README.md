@@ -93,3 +93,12 @@ If you run this, you'll see all of the intances and the `Name` property is the i
 Get-CimInstance "Win32_PerfFormattedData_PerfOS_Processor"
 ```
 If the counter has multiple instances and the instance property is not included in **plugin.json** all instances will be polled automamtically.
+
+### Service Installation
+
+`newrelic_perfmon_plugin.exe install` 
+
+This executible is build using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. Here is the full command-line reference for installing/uninstalling and running the service.
+
+http://docs.topshelf-project.com/en/latest/overview/commandline.html
+
