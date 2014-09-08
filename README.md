@@ -78,5 +78,18 @@ PSComputerName        :
 Putting that all together, you would add the following line under `counterList` in **plugin.json**.
 
 ```javascript
-{"provider": "MSSQLSQLEXPRESS", "category":"MSSQLSQLEXPRESSBufferManager", "counter":"Buffercachehitratio", "unit": "% Cache hits"},
+{"provider": "MSSQLSQLEXPRESS", "category":"MSSQLSQLEXPRESSBufferManager", "counter":"Buffercachehitratio", "unit": "% Cache hits"}
 ```
+
+Optionally, you can include an `instance` property. You can see the following in the template.
+
+```javascript
+{"provider": "PerfOS", "category":"Processor", "instance":"_Total", "counter":"PercentProcessorTime", "unit": "% Time"}
+```
+There is an instance of the counter for each logical processor. The __total_ instance represents the sum of all of them. 
+
+If you run this, you'll see all of the intances and the `Name` property is the indetifier.
+```powershell
+Get-CimInstance "Win32_PerfFormattedData_PerfOS_Processor"
+```
+If the counter has multiple instances and the instance property is not included in **plugin.json** all instances will be polled automamtically.
