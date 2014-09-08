@@ -12,13 +12,14 @@ namespace newrelic_perfmon_plugin
 
         private string Name { get; set; }
         private List<Object> Counters { get; set; }
-        private ManagementScope ManagementScopt { get; set; }
+        private ManagementScope Scope { get; set; }
 
         public PerfmonAgent(string name, List<Object> paths)
         {
             Name = name;
             Counters = paths;
-            ManagementScopt = new ManagementScope("\\\\" + Name + "\\root\\cimv2");      
+            Scope = new ManagementScope("\\\\" + Name + "\\root\\cimv2");
+            Scope.Connect();
         }
 
         public override string GetAgentName()
@@ -43,7 +44,7 @@ namespace newrelic_perfmon_plugin
 
                 string queryString = string.Format("Select Name, {2} from Win32_PerfFormattedData_{0}_{1}{3}", providerName, categoryName, counterName, predicate);
                 
-                ManagementObjectSearcher search = new ManagementObjectSearcher(ManagementScopt, new ObjectQuery(queryString));
+                ManagementObjectSearcher search = new ManagementObjectSearcher(Scope, new ObjectQuery(queryString));
 
                 try
                 {
@@ -70,15 +71,19 @@ namespace newrelic_perfmon_plugin
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine("Exception occurred in processing results.\n", e.Message, e.StackTrace);
+                            Console.WriteLine(string.Format("Exception occurred in processing results. {0}\r\n{1}", e.Message, e.StackTrace));
 
                         }
                     }
                 }
+                catch (ManagementException e)
+                {
+                    Console.WriteLine(string.Format("Exception occurred in polling. {0}\r\n{1}", e.Message, queryString));
+                }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Exception occurred in polling.\n", e.Message, e.StackTrace);
-                }              
+                    Console.WriteLine(string.Format("Unable to connect to \"{0}\". {1}", Name, e.Message));
+                }                      
             }
         }
     }
