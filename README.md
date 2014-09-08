@@ -98,7 +98,7 @@ If the counter has multiple instances and the instance property is not included 
 
 `newrelic_perfmon_plugin.exe install` 
 
-This executible is build using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. Here is the full command-line reference for installing/uninstalling and running the service.
+This executible is built using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. Here is the full command-line reference for installing/uninstalling and running the service.
 
 http://docs.topshelf-project.com/en/latest/overview/commandline.html
 
