@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NewRelic.Platform.Sdk;
+using NewRelic.Platform.Sdk.Utils;
 using System.Management;
 
 namespace newrelic_perfmon_plugin
@@ -14,12 +15,22 @@ namespace newrelic_perfmon_plugin
         private List<Object> Counters { get; set; }
         private ManagementScope Scope { get; set; }
 
+        private static Logger logger = Logger.GetLogger("newrelic_perfmon_plugin");
+
         public PerfmonAgent(string name, List<Object> paths)
         {
             Name = name;
             Counters = paths;
             Scope = new ManagementScope("\\\\" + Name + "\\root\\cimv2");
-            Scope.Connect();
+
+            try
+            {
+                Scope.Connect();
+            }
+            catch (Exception e)
+            {
+                logger.Error("Unable to connect to \"{0}\". {1}", Name, e.Message);
+            }
         }
 
         public override string GetAgentName()
@@ -31,59 +42,69 @@ namespace newrelic_perfmon_plugin
         {
             foreach (Dictionary<string, Object> counter in Counters)
             {
-
-                string providerName = counter["provider"].ToString();
-                string categoryName = counter["category"].ToString();
-                string counterName = counter["counter"].ToString();
-                string predicate = string.Empty;
-                if (counter.ContainsKey("instance"))
-                {
-                    predicate = string.Format(" Where Name = '{0}'", counter["instance"]);
-                }
-                string unitValue = counter["unit"].ToString();
-
-                string queryString = string.Format("Select Name, {2} from Win32_PerfFormattedData_{0}_{1}{3}", providerName, categoryName, counterName, predicate);
-                
-                ManagementObjectSearcher search = new ManagementObjectSearcher(Scope, new ObjectQuery(queryString));
-
-                try
-                {
-                    ManagementObjectCollection queryResults = search.Get();
-
-
-                    foreach (ManagementObject result in queryResults)
+                if (Scope.IsConnected)
+                { 
+                    string providerName = counter["provider"].ToString();
+                    string categoryName = counter["category"].ToString();
+                    string counterName = counter["counter"].ToString();
+                    string predicate = string.Empty;
+                    if (counter.ContainsKey("instance"))
                     {
-                        try
-                        {
-                            float value = Convert.ToSingle(result[counterName]);
-                            string instanceName = string.Empty;
+                        predicate = string.Format(" Where Name = '{0}'", counter["instance"]);
+                    }
+                    string unitValue = counter["unit"].ToString();
 
-                            if (result["Name"] != null)
+                    string queryString = string.Format("Select Name, {2} from Win32_PerfFormattedData_{0}_{1}{3}", providerName, categoryName, counterName, predicate);
+                
+                    ManagementObjectSearcher search = new ManagementObjectSearcher(Scope, new ObjectQuery(queryString));
+
+                    try
+                    {
+                        ManagementObjectCollection queryResults = search.Get();
+
+
+                        foreach (ManagementObject result in queryResults)
+                        {
+                            try
                             {
-                                instanceName = string.Format("({0})", result["Name"]);
+                                float value = Convert.ToSingle(result[counterName]);
+                                string instanceName = string.Empty;
+
+                                if (result["Name"] != null)
+                                {
+                                    instanceName = string.Format("({0})", result["Name"]);
+                                }
+
+                                string metricName = string.Format("{0}/{1}{3}/{2}", providerName, categoryName, counterName, instanceName);
+
+                                logger.Debug("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
+                                //Console.WriteLine("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
+
+                                ReportMetric(metricName, unitValue, value);
                             }
+                            catch (Exception e)
+                            {
+                                logger.Error("Exception occurred in processing results. {0}\r\n{1}", e.Message, e.StackTrace);
+                                //Console.WriteLine(string.Format("Exception occurred in processing results. {0}\r\n{1}", e.Message, e.StackTrace));
 
-                            string metricName = string.Format("{0}/{1}{3}/{2}", providerName, categoryName, counterName, instanceName);
-
-                            Console.WriteLine("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
-
-                            ReportMetric(metricName, unitValue, value);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(string.Format("Exception occurred in processing results. {0}\r\n{1}", e.Message, e.StackTrace));
-
+                            }
                         }
                     }
-                }
-                catch (ManagementException e)
+                    catch (ManagementException e)
+                    {
+                        logger.Error("Exception occurred in polling. {0}\r\n{1}", e.Message, queryString);
+                        //Console.WriteLine(string.Format("Exception occurred in polling. {0}\r\n{1}", e.Message, queryString));
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error("Unable to connect to \"{0}\". {1}", Name, e.Message);
+                        //Console.WriteLine(string.Format("Unable to connect to \"{0}\". {1}", Name, e.Message));
+                    }     
+                } 
+                else
                 {
-                    Console.WriteLine(string.Format("Exception occurred in polling. {0}\r\n{1}", e.Message, queryString));
+                    logger.Info("Could not connect to {0}. Not polling.", Name);
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(string.Format("Unable to connect to \"{0}\". {1}", Name, e.Message));
-                }                      
             }
         }
     }

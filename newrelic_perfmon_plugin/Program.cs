@@ -44,9 +44,11 @@ namespace newrelic_perfmon_plugin
             {
                 _runner.SetupAndRun();
             }
+            catch (System.Runtime.InteropServices.COMException e)
+            { }
             catch (Exception e)
             {
-                Console.WriteLine("Exception occurred, unable to continue.\n", e.Message);
+                Console.WriteLine("Exception occurred, unable to continue. {0}\r\n{1}", e.Message, e.StackTrace);
             }
         }
 
