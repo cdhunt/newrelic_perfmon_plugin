@@ -14,7 +14,7 @@ This is an executable/Windows service to push Windows Perfmon data to the [New R
 
 Create two new text files in the .\config directory named `newrelic.json` and `plugin.json`. You can use the contents of the _template_ files as a starting point.
 
-* **newrelic.json** - The only required field is your New Relic license key which can be found on the Account Summary page.
+* **newrelic.json** - The only required field is your New Relic license key which can be found on the Account Summary page. See [github.com/newrelic-platform/newrelic_dotnet_sdk](https://github.com/newrelic-platform/newrelic_dotnet_sdk#configuration-options) for more options.
 * **plugin.json** - This is the list of servers and counters you want to monitor. The `name` field needs to be a network address/hostname accessible from the system this service is running on. This `name` will show up as the Instance name in [https://rpm.newrelic.com](https://rpm.newrelic.com).
 
 #### Counters
