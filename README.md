@@ -24,7 +24,7 @@ Get a list of all counter categories:
 
 ```powershell
 # Using Powershell 4.0
-PS C:\> Get-CimInstance "Win32_PerfFormattedData" | select CimClass -Unique
+PS C:\> Get-CimClass Win32_PerfFormattedData* | Select CimClassName
 ```
 
 Let's take `root/cimv2:Win32_PerfFormattedData_MSSQLSQLEXPRESS_MSSQLSQLEXPRESSBufferManager` for example.
@@ -78,13 +78,13 @@ PSComputerName        :
 Putting that all together, you would add the following line under `counterList` in **plugin.json**.
 
 ```javascript
-{"provider": "MSSQLSQLEXPRESS", "category":"MSSQLSQLEXPRESSBufferManager", "counter":"Buffercachehitratio", "unit": "% Cache hits"}
+{"provider": "MSSQLSQLEXPRESS", "category":"MSSQLSQLEXPRESSBufferManager", "counter":"Buffercachehitratio", "unit": "% cache hits"}
 ```
 
 Optionally, you can include an `instance` property. You can see the following in the template.
 
 ```javascript
-{"provider": "PerfOS", "category":"Processor", "instance":"_Total", "counter":"PercentProcessorTime", "unit": "% Time"}
+{"provider": "PerfOS", "category":"Processor", "instance":"_Total", "counter":"PercentProcessorTime", "unit": "% time"}
 ```
 There is an instance of the counter for each logical processor. The __total_ instance represents the sum of all of them. 
 
