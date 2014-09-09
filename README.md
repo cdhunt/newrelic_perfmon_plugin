@@ -73,7 +73,7 @@ PSComputerName        :
 ```
 
 * counter = "Buffercachehitratio"
-* unit = "% Cache hits" _(just make up something meaningful. It's only used for display purposes)_
+* unit = "% Cache hits" _Check the [Metric Units Reference](https://docs.newrelic.com/docs/plugins/plugin-developer-resources/developer-reference/metric-units-reference "Metric Units Reference") when selecting units._
 
 Putting that all together, you would add the following line under `counterList` in **plugin.json**.
 
