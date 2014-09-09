@@ -9,7 +9,7 @@ namespace newrelic_perfmon_plugin
     class PerfmonAgent : Agent
     {
         public override string Guid { get { return "com.automatedops.perfmom_plugin"; } }
-        public override string Version { get { return "0.1.0"; } }
+        public override string Version { get { return "0.1.2"; } }
 
         private string Name { get; set; }
         private List<Object> Counters { get; set; }
@@ -75,7 +75,7 @@ namespace newrelic_perfmon_plugin
                                     instanceName = string.Format("({0})", result["Name"]);
                                 }
 
-                                string metricName = string.Format("{0}/{1}{3}/{2}", providerName, categoryName, counterName, instanceName);
+                                string metricName = string.Format("{0}{2}/{1}", categoryName, counterName, instanceName);
 
                                 logger.Debug("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
                                 //Console.WriteLine("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
