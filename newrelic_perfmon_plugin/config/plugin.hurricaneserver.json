@@ -1,0 +1,15 @@
+{
+  "agents": 
+  [
+	{ 
+		"name": "s600052dc3ew42",
+		"counterlist": 
+			[
+				{"provider": "HurricaneServer", "category":"HurricaneServer", "counter":"Numberinboundconnectionsopen", "unit": "connections"},
+				{"provider": "HurricaneServer", "category":"HurricaneServer", "counter":"Numbermessagesprocessed", "unit": "messages"},
+				{"provider": "HurricaneServer", "category":"HurricaneServer", "counter":"NumbermessagesprocessedPersec", "unit": "messages/second"},
+				{"provider": "HurricaneServer", "category":"HurricaneServer", "counter":"Numbermessagsequeued", "unit": "messages"}
+			]
+	}
+  ]
+}				

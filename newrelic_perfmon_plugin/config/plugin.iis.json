@@ -1,0 +1,34 @@
+{
+  "agents": 
+  [
+	{ 
+		"name": "ComputerName",
+		"counterlist": 
+			[
+				{"provider": "PerfOS", "category":"Memory", "counter":"PagesPersec", "unit": "pages/second"},
+				{"provider": "PerfOS", "category":"Memory", "counter":"AvailableMBytes", "unit": "megaBytes"},
+				{"provider": "PerfOS", "category":"Memory", "counter":"CommittedBytes", "unit": "bytes"},
+				{"provider": "PerfOS", "category":"Memory", "counter":"PoolNonpagedBytes", "unit": "bytes"},
+				{"provider": "PerfOS", "category":"Processor", "instance":"_Total", "counter":"PercentProcessorTime", "unit": "% time"},
+				{"provider": "PerfOS", "category":"Processor", "instance":"_Total", "counter":"InterruptsPersec", "unit": "interrupts/second"},
+				{"provider": "PerfOS", "category":"System", "counter":"ContextSwitchesPersec", "unit": "switches/second"},
+				{"provider": "PerfDisk", "category":"LogicalDisk", "counter":"PercentDiskTime", "unit": "% time"},
+				{"provider": "PerfDisk", "category":"LogicalDisk", "counter":"AvgDiskQueueLength", "unit": "queue length"},
+				{"provider": "PerfDisk", "category":"LogicalDisk", "counter":"DiskBytesPersec", "unit": "bytes/second"},
+				{"provider": "W3SVC", "category":"WebService", "instance":"_Total", "counter":"BytesTotalPersec", "unit": "bytes/second"},
+				{"provider": "W3SVC", "category":"WebService", "instance":"_Total", "counter":"CurrentConnections", "unit": "connections"},
+				{"provider": "W3SVC", "category":"WebService", "instance":"_Total", "counter":"TotalMethodRequestsPersec", "unit": "requests/second"},
+				{"provider": "W3SVC", "category":"WebServiceCache", "instance":"_Total", "counter":"FileCacheHitsPercent", "unit": "requests/second"},
+				{"provider": "W3SVC", "category":"WebServiceCache", "instance":"_Total", "counter":"KernelURICacheMisses", "unit": "misses"},
+				{"provider": "W3SVC", "category":"WebServiceCache", "instance":"_Total", "counter":"KernelURICacheHitsPercent", "unit": "% hits"},
+				{"provider": "ASPNET", "category":"ASPNET", "counter":"ApplicationRestarts", "unit": "restarts"},
+				{"provider": "ASPNET", "category":"ASPNET", "counter":"RequestsQueued", "unit": "requests"},
+				{"provider": "ASPNET", "category":"ASPNET", "counter":"WorkerProcessRestarts", "unit": "restarts"},
+				{"provider": "ASPNET", "category":"ASPNETApplications", "instance":"__total__", "counter":"ErrorsTotal", "unit": "errors"},
+				{"provider": "ASPNET", "category":"ASPNETApplications", "instance":"__total__", "counter":"RequestsPerSec", "unit": "requests/second"},
+				{"provider": "ASPNET", "category":"ASPNETApplications", "instance":"__total__", "counter":"PipelineInstanceCount", "unit": "instance"},
+				{"provider": "NETFramework", "category":"NETCLRExceptions", "instance":"w3wp*", "counter":"NumberofExcepsThrownPersec", "unit": "exceps/sercond"}
+			]
+	}
+  ]
+}

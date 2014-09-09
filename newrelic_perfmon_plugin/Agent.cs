@@ -50,7 +50,7 @@ namespace newrelic_perfmon_plugin
                     string predicate = string.Empty;
                     if (counter.ContainsKey("instance"))
                     {
-                        predicate = string.Format(" Where Name = '{0}'", counter["instance"]);
+                        predicate = string.Format(" Where Name Like '{0}'", counter["instance"]);
                     }
                     string unitValue = counter["unit"].ToString();
 
