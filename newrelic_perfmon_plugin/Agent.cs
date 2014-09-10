@@ -9,7 +9,7 @@ namespace newrelic_perfmon_plugin
     class PerfmonAgent : Agent
     {
         public override string Guid { get { return "com.automatedops.perfmom_plugin"; } }
-        public override string Version { get { return "0.1.4"; } }
+        public override string Version { get { return "0.2.0"; } }
 
         private string Name { get; set; }
         private List<Object> Counters { get; set; }

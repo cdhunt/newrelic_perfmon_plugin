@@ -2,6 +2,7 @@
 using NewRelic.Platform.Sdk;
 using Topshelf;
 using Topshelf.Runtime;
+using System.Threading;
 
 namespace newrelic_perfmon_plugin
 {
@@ -30,6 +31,7 @@ namespace newrelic_perfmon_plugin
     class PluginService
     {
         Runner _runner;
+        public Thread thread { get; set; }
 
         public PluginService()
         {
@@ -40,9 +42,12 @@ namespace newrelic_perfmon_plugin
         public void Start()
         {
             Console.WriteLine("Starting service.");
+
+            thread = new Thread(new ThreadStart(_runner.SetupAndRun));
             try
             {
-                _runner.SetupAndRun();
+                thread.Start();
+                //_runner.SetupAndRun();
             }
             catch (Exception e)
             {
@@ -55,7 +60,11 @@ namespace newrelic_perfmon_plugin
             Console.WriteLine("Stopping service in 5 seconds.");
             System.Threading.Thread.Sleep(5000);
             
-            _runner = null;
+            if (thread.IsAlive)
+            {
+                _runner = null;
+                thread.Abort();
+            }            
         }
     }
 }
