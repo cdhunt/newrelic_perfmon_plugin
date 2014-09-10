@@ -2,7 +2,7 @@
   "agents": 
   [
 	{ 
-		"name": "s600052dc3ew42",
+		"name": "computerName",
 		"counterlist": 
 			[
 				{"provider": "HurricaneServer", "category":"HurricaneServer", "counter":"Numberinboundconnectionsopen", "unit": "connections"},
