@@ -9,7 +9,7 @@ namespace newrelic_perfmon_plugin
     class PerfmonAgent : Agent
     {
         public override string Guid { get { return "com.automatedops.perfmom_plugin"; } }
-        public override string Version { get { return "0.1.3"; } }
+        public override string Version { get { return "0.1.4"; } }
 
         private string Name { get; set; }
         private List<Object> Counters { get; set; }
@@ -22,15 +22,6 @@ namespace newrelic_perfmon_plugin
             Name = name;
             Counters = paths;
             Scope = new ManagementScope("\\\\" + Name + "\\root\\cimv2");
-
-            try
-            {
-                Scope.Connect();
-            }
-            catch (Exception e)
-            {
-                logger.Error("Unable to connect to \"{0}\". {1}", Name, e.Message);
-            }
         }
 
         public override string GetAgentName()
@@ -40,10 +31,13 @@ namespace newrelic_perfmon_plugin
 
         public override void PollCycle()
         {
-            foreach (Dictionary<string, Object> counter in Counters)
+            try
             {
-                if (Scope.IsConnected)
-                { 
+                Scope.Connect();            
+
+                foreach (Dictionary<string, Object> counter in Counters)
+                {
+
                     string providerName = counter["provider"].ToString();
                     string categoryName = counter["category"].ToString();
                     string counterName = counter["counter"].ToString();
@@ -101,10 +95,11 @@ namespace newrelic_perfmon_plugin
                         //Console.WriteLine(string.Format("Unable to connect to \"{0}\". {1}", Name, e.Message));
                     }     
                 } 
-                else
-                {
-                    logger.Info("Could not connect to {0}. Not polling.", Name);
-                }
+         
+            }    
+            catch (Exception e)
+            {
+                logger.Error("Unable to connect to \"{0}\". {1}", Name, e.Message);
             }
         }
     }
