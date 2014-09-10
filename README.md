@@ -105,7 +105,6 @@ Here are some example counterLists for some different applications.
 
 `newrelic_perfmon_plugin.exe install` 
 
-This executible is built using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. Here is the full command-line reference for installing/uninstalling and running the service.
+You will be prompted for credentials. The service will need to run under an account that has user access to all hosts referenced in **plugin.json**.
 
-http://docs.topshelf-project.com/en/latest/overview/commandline.html
-
+This executable is built using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. 
