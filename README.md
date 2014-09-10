@@ -88,11 +88,18 @@ Optionally, you can include an `instance` property. You can see the following in
 ```
 There is an instance of the counter for each logical processor. The __total_ instance represents the sum of all of them. 
 
-If you run this, you'll see all of the intances and the `Name` property is the indetifier.
+If you run this, you'll see all of the instances and the `Name` property is the identifier.
 ```powershell
 Get-CimInstance "Win32_PerfFormattedData_PerfOS_Processor"
 ```
-If the counter has multiple instances and the instance property is not included in **plugin.json** all instances will be polled automamtically.
+If the counter has multiple instances and the instance property is not included in **plugin.json** all instances will be polled automatically.
+
+#### Examples
+
+Here are some example counterLists for some different applications.
+
+* [IIS](https://github.com/cdhunt/newrelic_perfmon_plugin/blob/master/newrelic_perfmon_plugin/config/plugin.iis.json "IIS")
+* [SocketLabs Mail Transfer Agent](https://github.com/cdhunt/newrelic_perfmon_plugin/blob/master/newrelic_perfmon_plugin/config/plugin.hurricaneserver.json "SocketLabs Hurricane MTA")
 
 ### Service Installation
 
