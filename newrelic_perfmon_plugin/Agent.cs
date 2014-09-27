@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using NewRelic.Platform.Sdk;
 using NewRelic.Platform.Sdk.Utils;
 using System.Management;
+using System.Configuration;
 
 namespace newrelic_perfmon_plugin
 {
     class PerfmonAgent : Agent
     {
-        public override string Guid { get { return "com.automatedops.perfmom_plugin"; } }
+        private static string DefaultGuid = "com.automatedops.perfmom_plugin";
+
+        public override string Guid { get {
+            if (ConfigurationManager.AppSettings.HasKeys())
+            {
+                if (! string.IsNullOrEmpty(ConfigurationManager.AppSettings["guid"].ToString()))
+                {
+                    return ConfigurationManager.AppSettings["guid"].ToString();
+                }
+            }
+            return DefaultGuid;
+        } }
         
         public override string Version { get 
             {
