@@ -18,7 +18,9 @@ Create two new text files in the .\config directory named `newrelic.json` and `p
 * **plugin.json** - This is the list of servers and counters you want to monitor. The `name` field needs to be a network address/hostname accessible from the system this service is running on. This `name` will show up as the Instance name in [https://rpm.newrelic.com](https://rpm.newrelic.com).
 
 #### Counters
-The CIM interface is uses to collect to Perfmon data. You can use the following directions to find and build new entries for the `counterList` array in **plugin.json**.
+Out-of-the-box, we have collected a set of Perfmon counters and dashboards that pertain to .NET applications. If you would like to collect your own counters, you first need to uncomment the appSettings section of the `App.config` to provide a unique plugin [GUID](https://github.com/newrelic-platform/newrelic_dotnet_sdk#implement-abstract-properties-and-overload-constructor). Then customize the `counterList`.
+
+The CIM interface is used to collect to Perfmon data. You can use the following directions to find and build new entries for the `counterList` array in **plugin.json**.
 
 Get a list of all counter categories:
 
