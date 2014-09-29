@@ -1,5 +1,6 @@
 ﻿using System;
 using NewRelic.Platform.Sdk;
+using NewRelic.Platform.Sdk.Utils;
 using Topshelf;
 using Topshelf.Runtime;
 using System.Threading;
@@ -33,6 +34,8 @@ namespace newrelic_perfmon_plugin
         Runner _runner;
         public Thread thread { get; set; }
 
+        private static Logger logger = Logger.GetLogger("newrelic_perfmon_plugin");
+
         public PluginService()
         {
             _runner = new Runner();
@@ -41,23 +44,21 @@ namespace newrelic_perfmon_plugin
 
         public void Start()
         {
-            Console.WriteLine("Starting service.");
-
+            logger.Info("Starting service.");
             thread = new Thread(new ThreadStart(_runner.SetupAndRun));
             try
             {
                 thread.Start();
-                //_runner.SetupAndRun();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception occurred, unable to continue. {0}\r\n{1}", e.Message, e.StackTrace);
+                logger.Error("Exception occurred, unable to continue. {0}\r\n{1}", e.Message, e.StackTrace);
             }
         }
 
         public void Stop()
         {
-            Console.WriteLine("Stopping service in 5 seconds.");
+            logger.Info("Stopping service.");
             System.Threading.Thread.Sleep(5000);
             
             if (thread.IsAlive)
