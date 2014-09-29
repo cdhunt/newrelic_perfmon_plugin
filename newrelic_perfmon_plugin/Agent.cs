@@ -90,27 +90,22 @@ namespace newrelic_perfmon_plugin
                                 string metricName = string.Format("{0}{2}/{1}", categoryName, counterName, instanceName);
 
                                 logger.Debug("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
-                                //Console.WriteLine("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
 
                                 ReportMetric(metricName, unitValue, value);
                             }
                             catch (Exception e)
                             {
                                 logger.Error("Exception occurred in processing results. {0}\r\n{1}", e.Message, e.StackTrace);
-                                //Console.WriteLine(string.Format("Exception occurred in processing results. {0}\r\n{1}", e.Message, e.StackTrace));
-
                             }
                         }
                     }
                     catch (ManagementException e)
                     {
                         logger.Error("Exception occurred in polling. {0}\r\n{1}", e.Message, queryString);
-                        //Console.WriteLine(string.Format("Exception occurred in polling. {0}\r\n{1}", e.Message, queryString));
                     }
                     catch (Exception e)
                     {
                         logger.Error("Unable to connect to \"{0}\". {1}", Name, e.Message);
-                        //Console.WriteLine(string.Format("Unable to connect to \"{0}\". {1}", Name, e.Message));
                     }     
                 } 
          
