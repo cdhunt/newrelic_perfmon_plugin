@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewRelic.Platform.Sdk">
-      <HintPath>..\..\..\..\..\..\..\temp\newrelic_platform_dotnet_sdk\NewRelic.Platform.Sdk.dll</HintPath>
+    <Reference Include="NewRelic.Platform.Sdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ref\newrelic_platform_dotnet_sdk\NewRelic.Platform.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -55,7 +56,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="config\newrelic.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -69,6 +72,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="ref\newrelic_platform_dotnet_sdk\CHANGELOG.md" />
+    <None Include="ref\newrelic_platform_dotnet_sdk\LICENSE" />
+    <None Include="ref\newrelic_platform_dotnet_sdk\NewRelic.Platform.Sdk.dll.config" />
+    <None Include="ref\newrelic_platform_dotnet_sdk\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ref\newrelic_platform_dotnet_sdk\NewRelic.Platform.Sdk.dll" />
+    <Content Include="ref\newrelic_platform_dotnet_sdk\NewRelic.Platform.Sdk.pdb" />
+    <Content Include="ref\newrelic_platform_dotnet_sdk\Newtonsoft.Json.dll" />
+    <Content Include="ref\newrelic_platform_dotnet_sdk\Newtonsoft.Json.xml" />
+    <Content Include="ref\newrelic_platform_dotnet_sdk\NLog.dll" />
+    <Content Include="ref\newrelic_platform_dotnet_sdk\NLog.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
