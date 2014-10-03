@@ -110,3 +110,5 @@ Here are some example counterLists for some different applications.
 You will be prompted for credentials. The service will need to run under an account that has user access to all hosts referenced in **plugin.json**.
 
 This executable is built using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. 
+
+[![Build status](https://ci.appveyor.com/api/projects/status/hjbbbol9tk1wqept)](https://ci.appveyor.com/project/cdhunt/newrelic-perfmon-plugin)
