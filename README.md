@@ -1,9 +1,9 @@
-newrelic_perfmon_plugin
+New Relic Windows Perfmon Plugin 
 =======================
 
-_New Relic Windows Perfmon Plugin_
-
 This is an executable/Windows service to push Windows Perfmon data to the [New Relic Platform](http://newrelic.com/platform "New Relic Platform"). 
+
+[![Build status](https://ci.appveyor.com/api/projects/status/hjbbbol9tk1wqept)](https://ci.appveyor.com/project/cdhunt/newrelic-perfmon-plugin)
 
 ### Requriements
 
@@ -96,13 +96,6 @@ Get-CimInstance "Win32_PerfFormattedData_PerfOS_Processor"
 ```
 If the counter has multiple instances and the instance property is not included in **plugin.json** all instances will be polled automatically.
 
-#### Examples
-
-Here are some example counterLists for some different applications.
-
-* [IIS](https://github.com/cdhunt/newrelic_perfmon_plugin/blob/master/newrelic_perfmon_plugin/config/plugin.iis.json "IIS")
-* [SocketLabs Mail Transfer Agent](https://github.com/cdhunt/newrelic_perfmon_plugin/blob/master/newrelic_perfmon_plugin/config/plugin.hurricaneserver.json "SocketLabs Hurricane MTA")
-
 ### Service Installation
 
 `newrelic_perfmon_plugin.exe install` 
@@ -111,4 +104,3 @@ You will be prompted for credentials. The service will need to run under an acco
 
 This executable is built using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/hjbbbol9tk1wqept)](https://ci.appveyor.com/project/cdhunt/newrelic-perfmon-plugin)
