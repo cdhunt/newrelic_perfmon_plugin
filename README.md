@@ -5,6 +5,13 @@ This is an executable/Windows service to push Windows Perfmon data to the [New R
 
 [![Build status](https://ci.appveyor.com/api/projects/status/hjbbbol9tk1wqept)](https://ci.appveyor.com/project/cdhunt/newrelic-perfmon-plugin)
 
+### Table of Contents
+
+ * [Requriements](#requriements)
+ * [Configuration](#configuration)
+  * [Counters](#counters)
+ * [Service Installation](#service-installation)
+
 ### Requriements
 
 * .NET >= 4.0
