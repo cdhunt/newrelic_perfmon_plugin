@@ -9,7 +9,7 @@ namespace newrelic_perfmon_plugin
 {
     class PerfmonAgent : Agent
     {
-        private static string DefaultGuid = "com.automatedops.perfmom_plugin";
+        private static string DefaultGuid = "com.automatedops.perfmon_plugin";
 
         public override string Guid { get {
             if (ConfigurationManager.AppSettings.HasKeys())
