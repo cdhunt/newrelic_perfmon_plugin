@@ -24,84 +24,8 @@ Create two new text files in the .\config directory named `newrelic.json` and `p
 * **newrelic.json** - The only required field is your New Relic license key which can be found on the Account Summary page. See [github.com/newrelic-platform/newrelic_dotnet_sdk](https://github.com/newrelic-platform/newrelic_dotnet_sdk#configuration-options) for more options.
 * **plugin.json** - This is the list of servers and counters you want to monitor. The `name` field needs to be a network address/hostname accessible from the system this service is running on. This `name` will show up as the Instance name in [https://rpm.newrelic.com](https://rpm.newrelic.com).
 
-#### Counters
-Out-of-the-box, we have collected a set of Perfmon counters and dashboards that pertain to .NET applications. If you would like to collect your own counters, you first need to uncomment the appSettings section of the `App.config` to provide a unique plugin [GUID](https://github.com/newrelic-platform/newrelic_dotnet_sdk#implement-abstract-properties-and-overload-constructor). Then customize the `counterList`.
-
-The CIM interface is used to collect to Perfmon data. You can use the following directions to find and build new entries for the `counterList` array in **plugin.json**.
-
-Get a list of all counter categories:
-
-```powershell
-# Using Powershell 4.0
-PS C:\> Get-CimClass Win32_PerfFormattedData* | Select CimClassName
-```
-
-Let's take `root/cimv2:Win32_PerfFormattedData_MSSQLSQLEXPRESS_MSSQLSQLEXPRESSBufferManager` for example.
-
-* provider = "MSSQLSQLEXPRESS"
-* category = "MSSQLSQLEXPRESSBufferManager"
-
-The format is `Win32_PerfFormattedData_{provider}_{category}`.
-
-Get a list of all counters for that category:
- 
-```powershell
-PS C:\> Get-CimInstance "Win32_PerfFormattedData_MSSQLSQLEXPRESS_MSSQLSQLEXPRESSBufferManager"
-
-
-Caption               :
-Description           :
-Name                  :
-Frequency_Object      :
-Frequency_PerfTime    :
-Frequency_Sys100NS    :
-Timestamp_Object      :
-Timestamp_PerfTime    :
-Timestamp_Sys100NS    :
-AWElookupmapsPersec   : 0
-AWEstolenmapsPersec   : 0
-AWEunmapcallsPersec   : 0
-AWEunmappagesPersec   : 0
-AWEwritemapsPersec    : 0
-Buffercachehitratio   : 100
-CheckpointpagesPersec : 0
-Databasepages         : 247
-FreeliststallsPersec  : 0
-Freepages             : 396
-LazywritesPersec      : 0
-Pagelifeexpectancy    : 251325
-PagelookupsPersec     : 56
-PagereadsPersec       : 0
-PagewritesPersec      : 0
-ReadaheadpagesPersec  : 0
-Reservedpages         : 0
-Stolenpages           : 893
-Targetpages           : 84612
-Totalpages            : 1536
-PSComputerName        :
-```
-
-* counter = "Buffercachehitratio"
-* unit = "% Cache hits" _Check the [Metric Units Reference](https://docs.newrelic.com/docs/plugins/plugin-developer-resources/developer-reference/metric-units-reference "Metric Units Reference") when selecting units._
-
-Putting that all together, you would add the following line under `counterList` in **plugin.json**.
-
-```javascript
-{"provider": "MSSQLSQLEXPRESS", "category":"MSSQLSQLEXPRESSBufferManager", "counter":"Buffercachehitratio", "unit": "% cache hits"}
-```
-
-Optionally, you can include an `instance` property. You can see the following in the template.
-
-```javascript
-{"provider": "PerfOS", "category":"Processor", "instance":"_Total", "counter":"PercentProcessorTime", "unit": "% time"}
-```
-There is an instance of the counter for each logical processor. The __total_ instance represents the sum of all of them. 
-
-If you run this, you'll see all of the instances and the `Name` property is the identifier.
-```powershell
-Get-CimInstance "Win32_PerfFormattedData_PerfOS_Processor"
-```
-If the counter has multiple instances and the instance property is not included in **plugin.json** all instances will be polled automatically.
+#### Custom Counters
+Check out the [Wiki](wiki/custom-counters) for instructions on customizing the permon counters collected by this service.
 
 ### Service Installation
 
