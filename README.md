@@ -7,12 +7,12 @@ This is an executable/Windows service to push Windows Perfmon data to the [New R
 
 ### Table of Contents
 
- * [Requirements](#requriements)
+ * [Requirements](#requirements)
  * [Configuration](#configuration)
   * [Custom Counters](#custom-counters)
  * [Service Installation](#service-installation)
 
-### Requriements
+### Requirements
 
 * .NET >= 4.0
 * New Relic account
