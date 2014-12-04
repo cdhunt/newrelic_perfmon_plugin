@@ -7,7 +7,7 @@ This is an executable/Windows service to push Windows Perfmon data to the [New R
 
 ### Table of Contents
 
- * [Requriements](#requriements)
+ * [Requirements](#requriements)
  * [Configuration](#configuration)
   * [Custom Counters](#custom-counters)
  * [Service Installation](#service-installation)
@@ -25,7 +25,7 @@ Create two new text files in the .\config directory named `newrelic.json` and `p
 * **plugin.json** - This is the list of servers and counters you want to monitor. The `name` field needs to be a network address/hostname accessible from the system this service is running on. This `name` will show up as the Instance name in [https://rpm.newrelic.com](https://rpm.newrelic.com).
 
 #### Custom Counters
-Check out the [Wiki](../../wiki/custom-counters) for instructions on customizing the permon counters collected by this service.
+Check out the [Wiki](../../wiki/custom-counters) for instructions on customizing the Perfmon counters collected by this service.
 
 ### Service Installation
 
@@ -33,5 +33,4 @@ Check out the [Wiki](../../wiki/custom-counters) for instructions on customizing
 
 You will be prompted for credentials. The service will need to run under an account that has user access to all hosts referenced in **plugin.json**.
 
-This executable is built using the [Topshelf](http://topshelf-project.com/ "Topshelf") library. 
-
+This executable is built using the [Topshelf](http://topshelf-project.com/ "Topshelf") library.
