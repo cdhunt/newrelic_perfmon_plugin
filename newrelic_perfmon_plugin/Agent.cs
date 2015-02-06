@@ -52,6 +52,7 @@ namespace newrelic_perfmon_plugin
             try
             {
                 Scope.Connect();            
+                var metricNames = new Dictionary<string, int>();
 
                 foreach (Dictionary<string, Object> counter in Counters)
                 {
@@ -88,6 +89,15 @@ namespace newrelic_perfmon_plugin
                                 }
 
                                 string metricName = string.Format("{0}{2}/{1}", categoryName, counterName, instanceName);
+
+                                if (metricNames.ContainsKey(metricName))
+                                {
+                                    metricName = metricName + "#" + metricNames[metricName]++;
+                                }
+                                else
+                                {
+                                    metricNames.Add(metricName, 1);
+                                }
 
                                 logger.Debug("{0}/{1}: {2} {3}", Name, metricName, value, unitValue);
 
